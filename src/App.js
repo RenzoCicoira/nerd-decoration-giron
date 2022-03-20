@@ -3,11 +3,13 @@ import Navbar from './components/NavBar';
 import ItemListContainer from './components/ItemListContainer';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import FunctionalComponent from './components/types/Functional';
 
 const styles = {
   presentation: {
     padding: '1rem',
-    backgroundColor: 'lightGray'
+    backgroundColor: 'rgb(68 64 60)',
+    color: 'white'
   }
 }
 
@@ -15,6 +17,8 @@ const presentation = {
   title: 'Nerd Decoration',
   description: 'Tienda de Decoration para aquellos que cambian el mundo: Los Nerds'
 }
+
+const anotherTitle = 'Soy el contador'
 
 
 function App() {
@@ -27,8 +31,12 @@ function App() {
         <ItemListContainer
         title={presentation.title}
         description={presentation.description}
+        anotherTitle={anotherTitle}
         />
       </div>
+      {/* <div>
+        <FunctionalComponent />
+      </div> */}
     </div>
   )
 }
