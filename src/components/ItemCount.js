@@ -15,10 +15,12 @@ const ItemCount = ({initialValue, stock}) => {
   }
 
   const addToCart = () => {
-    if(counter > 0){
-      console.log(`Agregaste ${counter} artículos al carrito`)
+    if(counter == 0){
+      console.log(`No agregaste ningún artículo al carrito`)
+    } else if (counter == 1){
+      console.log(`Agregaste 1 artículo al carrito`)
     } else {
-      console.log(`No agregaste ningún producto al carrito `)
+      console.log(`Agregaste ${counter} artículos al carrito`)
     }
   }
 
