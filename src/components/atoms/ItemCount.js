@@ -25,7 +25,7 @@ const ItemCount = ({initialValue, stock}) => {
   }
 
   return (
-    <div className='flex flex-col items-center bg-gray-600 w-48 pb-4 rounded-xl'>
+    <div className='flex flex-col items-center bg-gray-600 w-48 pb-4 mt-2 rounded-xl'>
       <div>
         <button onClick={subtract} className='m-4 py-1 px-2 bg-red-500 rounded-xl'>-</button>
         <span>{counter}</span>
