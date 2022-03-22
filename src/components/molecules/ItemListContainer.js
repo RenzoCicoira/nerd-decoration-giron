@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import ItemCount from "./ItemCount"
+import ItemCount from "../atoms/ItemCount"
 
 const ItemListContainer = ({title, description}) => {
   return (

@@ -1,9 +1,10 @@
 import './App.css';
 import Navbar from './components/NavBar';
-import ItemListContainer from './components/ItemListContainer';
+import ItemListContainer from './components/molecules/ItemListContainer';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import FunctionalComponent from './components/types/Functional';
+import ItemList from './components/molecules/ItemList';
 
 const styles = {
   presentation: {
@@ -34,9 +35,7 @@ function App() {
         anotherTitle={anotherTitle}
         />
       </div>
-      {/* <div>
-        <FunctionalComponent />
-      </div> */}
+      <ItemList />
     </div>
   )
 }

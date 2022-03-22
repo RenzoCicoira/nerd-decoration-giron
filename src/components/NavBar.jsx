@@ -1,5 +1,5 @@
 import logo from '../assets/logoNerDecoration.png'
-import CartWidget from './CartWidget'
+import CartWidget from './atoms/CartWidget'
 
 const Navbar = () => {
   return(
