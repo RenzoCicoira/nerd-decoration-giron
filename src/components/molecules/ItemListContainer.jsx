@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
-import Item from '../atoms/Item'
+import ItemList  from "./ItemList"
+import { useEffect, useState } from "react"
 
-export const ItemList = ({card}) => {
+const ItemListContainer = ({title, description}) => {
   const [arrayProducts, setArrayProducts] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
+
   const products = [
     {name: 'Almohadon under CTRL', id: "1", price: 800, category: 'Textil', img: 'https://i.pinimg.com/236x/54/9d/0e/549d0e5be935565094decaee06a4d725.jpg'},
     {name: 'Creative picture', id: "2", price: 4500, category: 'Decoración', img: 'https://i.pinimg.com/236x/d4/53/96/d453962c530d5364420545a5c5cc5914.jpg'},
@@ -18,44 +19,35 @@ export const ItemList = ({card}) => {
     {name: 'Almohadon Pokemon', id: "11", price: 900, category: 'Textil', img: 'https://i.pinimg.com/564x/de/cd/aa/decdaa4004bbe08a12ec366f7593f08e.jpg'},
     {name: 'Alfombra Nintendo Super Nes', id: "12", price: 2500, category: 'Textil', img: 'https://i.pinimg.com/236x/a7/6e/01/a76e01e226c6b752e5d50fe8cd29fee1.jpg'},
   ]
-  
+
   const getProducts = new Promise ((resolve, reject) => {
     let condition = true
     if(condition){
       setTimeout(() => {
         resolve(products)
-      }, 2000)
+      }, 3000)
     }else {
       reject(`Se pudrio todo`)
     }
   })
-  console.log(getProducts)
+
 
   useEffect (() =>{
+    setLoading(true)
     getProducts
     .then((res) => setArrayProducts(res))
     .catch((error) => console.log(error))
-    .finally(()=> setLoading(false))
+    .finally(() => setLoading(false))
   },[])
 
-  console.log(arrayProducts)
-
-return (
-  <div className=''>
-    <div className='flex justify-center'>
-      <h2>Productos</h2>
+  return (
+    <div className="flex flex-col items-center">
+      <h1 className="title">{title}</h1>
+      <p className="description">{description}</p>
+      {loading ? <p className="text-2xl">Cargando...</p> : <ItemList arrayProducts={arrayProducts}/>}
+      
     </div>
-    <div className='grid grid-cols-3'>
-    { loading ? <p>Cargando...</p> : arrayProducts.map((product) => (
-      <Item
-      name={product.name}
-      category={product.category}
-      price={product.price}
-      img={product.img}
-      key={product.id}
-      />
-    ))}
-    </div>
-  </div>
-)
+  )
 }
+
+export default ItemListContainer
