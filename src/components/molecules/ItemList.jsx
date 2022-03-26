@@ -3,7 +3,7 @@
  
  const ItemList = ({arrayProducts}) => {
    return (
-     <div className='grid grid-cols-3'>
+     <div className='flex flex-wrap justify-center'>
        {arrayProducts.map(product => <Item product={product} key={product.id}/>)}
      </div>
    )
