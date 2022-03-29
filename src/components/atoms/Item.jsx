@@ -1,18 +1,14 @@
 import React from 'react'
-import ItemCount from './ItemCount'
+import { Link } from 'react-router-dom'
 
 const Item = ({product}) => {
-  const {name, category, price, img, id} = product
+  const {name, price, img, id} = product
   return (
     <div key={id} className="w-96 bg-gray-800 py-4 m-4 flex flex-col items-center rounded-xl">
-      <h3>{name}</h3>
-      <img src={img} alt={name} className=""/>
-      <p className='mt-2 text-xl'>{category}</p>
+      <img src={img} alt={name} className="mt-2"/>
+      <h3 className='mt-4'>{name}</h3>
       <p className='text-2xl'>${price}</p>
-      <button>Ver más información</button>
-      <div>
-        <ItemCount initialValue={1} stock={5}/>
-      </div>
+      <Link to={`/detail/${id}`}><button className='bg-orange-500 p-2 px-4 text-lg text-white rounded'>Ver más</button></Link>
     </div>
   )
 }

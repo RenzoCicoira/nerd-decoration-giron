@@ -3,8 +3,10 @@ import Navbar from './components/NavBar';
 import ItemListContainer from './components/molecules/ItemListContainer';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Contacto from './components/Contacto';
+import Nosotros from './components/Nosotros';
 import ItemDetailContainer from './components/molecules/ItemDetailContainer';
-import Fetch from './components/Fetch';
 
 const presentation = {
   title: 'Nerd Decoration',
@@ -14,16 +16,19 @@ const presentation = {
 
 function App() {
   return (
-    <div>
-      <nav className="App">
-        <Navbar/>
-      </nav>
-      <div className='bg-stone-700 p-1 text-white'>
-        <ItemListContainer {...presentation}/>
-        <ItemDetailContainer />
-        <Fetch/>
+    <BrowserRouter>
+      <Navbar/>
+      <div className='bg-stone-700 text-white'>
+        <Routes>
+        <Route path='/' element={<ItemListContainer {...presentation}/>}/>
+          <Route path='/category/:categoryId' element={<ItemListContainer {...presentation}/>}/>
+          <Route path='/detail/:itemId' element={ <ItemDetailContainer/>}/>
+          <Route path='/contacto' element={<Contacto />} />
+          <Route path='/nosotros' element={<Nosotros />} />
+          <Route path='*' element={ <Navigate to='/'/> }/>
+        </Routes>
       </div>
-    </div>
+    </BrowserRouter>
   )
 }
 
