@@ -1,17 +1,34 @@
 import React from 'react'
 import ItemCount from './ItemCount'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
-const ItemDetail = ({name, price, img, stock, description}) => {
+const ItemDetail = ({name, price, img, stock, description, id}) => {
 
   const navigate = useNavigate()
 
   const handleNavigate = () => {
     navigate(-1)
   }
+  
+  const [counter, setCounter] = useState (1)
+
+  const addToCart = () => {
+    const itemToAdd = {
+      id,
+      name,
+      price,
+      img,
+      counter
+    }
+    console.log(itemToAdd)
+  }
 
   return (
-    <div className='w-2/3 bg-gray-800 py-4 m-4 flex flex-row flex-wrap justify-center items-center rounded-xl'>
+    <div className='w-2/3 bg-gray-800 py-2 m-2 flex flex-row flex-wrap justify-center items-center rounded-xl'>
+      <div className='flex h-96'>
+        <button className="text-white bg-orange-500 px-4 py-2 rounded self-start" onClick={handleNavigate}>Volver</button>
+      </div>
       <div className='flex flex-col px-4 w-96'>
         <p className='text-2xl'>Detalle del producto:</p>
         <img src={img} alt={name} className="m-2"/>
@@ -23,13 +40,14 @@ const ItemDetail = ({name, price, img, stock, description}) => {
         <p className='text-2xl'>Precio: ${price}</p>
         <p className='text-lg'>Stock Disponible: {stock}</p>
         <div className='self-center'>
-          <ItemCount name={name} max={stock}/>
+          <ItemCount 
+          max={stock} 
+          counter={counter}
+          setCounter={setCounter}
+          onAdd={addToCart}/>
         </div>
       </div>
       <hr/>
-      <div className='flex h-96'>
-        <button className="text-white bg-orange-500 px-4 py-2 mt-4 rounded self-start" onClick={handleNavigate}>Volver</button>
-      </div>
     </div>
   )
 }
