@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Contacto from './components/Contacto';
 import Nosotros from './components/Nosotros';
 import ItemDetailContainer from './components/molecules/ItemDetailContainer';
+import Cart from './Cart';
 
 const presentation = {
   title: 'Nerd Decoration',
@@ -26,6 +27,7 @@ function App() {
           <Route path='/contacto' element={<Contacto />} />
           <Route path='/nosotros' element={<Nosotros />} />
           <Route path='*' element={ <Navigate to='/'/> }/>
+          <Route path='/cart' element={<Cart/>}/>
         </Routes>
       </div>
     </BrowserRouter>

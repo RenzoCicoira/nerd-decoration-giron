@@ -1,7 +1,8 @@
 import React from 'react'
 import ItemCount from './ItemCount'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+// import Cart from '../../Cart'
 
 const ItemDetail = ({name, price, img, stock, description, id}) => {
 
@@ -12,8 +13,12 @@ const ItemDetail = ({name, price, img, stock, description, id}) => {
   }
   
   const [counter, setCounter] = useState (1)
+  // creo un estado para agrear el elemento Cart
+  const [buy, setBuy] = useState("")
 
   const addToCart = () => {
+    // cambio el estado de buy para agregar el elemento cart cuando se de click en el botón Agregar al Carrito
+    setBuy(<Link to="/cart" className='m-4 py-1 px-3 bg-green-500 rounded-2xl text-2xl'>Finalizar Compra</Link>)
     const itemToAdd = {
       id,
       name,
@@ -22,6 +27,7 @@ const ItemDetail = ({name, price, img, stock, description, id}) => {
       counter
     }
     console.log(itemToAdd)
+    
   }
 
   return (
@@ -44,7 +50,9 @@ const ItemDetail = ({name, price, img, stock, description, id}) => {
           max={stock} 
           counter={counter}
           setCounter={setCounter}
-          onAdd={addToCart}/>
+          onAdd={addToCart}
+          buy={buy}
+          />
         </div>
       </div>
       <hr/>
