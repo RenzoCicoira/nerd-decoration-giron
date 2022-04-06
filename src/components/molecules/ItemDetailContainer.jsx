@@ -8,8 +8,6 @@ const ItemDetailContainer = () => {
 const [productDetail, setProductDetail] = useState(null)
 const [loading, setLoading] = useState(false)
 const { itemId } = useParams()
-console.log(itemId)
-console.log(productDetail)
 
 useEffect(() => {
 

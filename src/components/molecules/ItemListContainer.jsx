@@ -4,11 +4,12 @@ import { getProducts } from "../../mocks/FakeApi"
 import { useParams } from "react-router-dom"
 
 const ItemListContainer = ({title, description}) => {
+
   const [arrayProducts, setArrayProducts] = useState([])
   const [loading, setLoading] = useState(false)
 
   const {categoryId} = useParams()
-  console.log(categoryId)
+  // console.log(categoryId)
 
   useEffect (() =>{
     setLoading(true)

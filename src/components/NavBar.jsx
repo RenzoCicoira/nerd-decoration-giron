@@ -14,7 +14,7 @@ const Navbar = () => {
 
       {/* <Link to="/nosotros" className="no-underline text-gray-100 hover:text-gray-800">Nosotros</Link>
       <Link to="/contacto" className="no-underline text-gray-100 hover:text-gray-800">Contacto</Link> */}
-      <CartWidget />
+      <Link className='' to='/cart'><CartWidget /></Link>
     </nav>
   )
 }

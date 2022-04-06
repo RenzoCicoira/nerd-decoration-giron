@@ -46,7 +46,7 @@ const products = [
     description: 'sarasa lorem sarasa lorem sarasa lorem sarasa lorem sarasa lorem', 
     img: 'https://i.pinimg.com/236x/c2/bd/cc/c2bdcc4d1499323beda3006aa978ce58.jpg'},
   {
-    name: 'Reloj con lenguajes de programacion', 
+    name: 'Reloj de lenguajes', 
     id: "7", price: 5500, 
     category: 'decoración', 
     stock: 10, 
