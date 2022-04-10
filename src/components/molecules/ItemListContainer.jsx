@@ -9,7 +9,6 @@ const ItemListContainer = ({title, description}) => {
   const [loading, setLoading] = useState(false)
 
   const {categoryId} = useParams()
-  // console.log(categoryId)
 
   useEffect (() =>{
     setLoading(true)
@@ -34,7 +33,11 @@ const ItemListContainer = ({title, description}) => {
     <div className="flex flex-col items-center">
       <h1 className="title">{title}</h1>
       <p className="description">{description}</p>
-      {loading ? <p className="text-2xl">Cargando...</p> : <ItemList arrayProducts={arrayProducts}/>}
+      {
+        loading 
+        ? <p className="text-2xl">Cargando...</p> 
+        : <ItemList arrayProducts={arrayProducts}/>
+      }
     </div>
   )
 }

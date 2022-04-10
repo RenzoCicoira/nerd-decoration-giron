@@ -28,7 +28,7 @@ const products = [
     name: 'Poster 3D pacman', 
     id: "4", price: 8000, 
     category: 'decoración', 
-    stock: 25, 
+    stock: 0, 
     description: 'sarasa lorem sarasa lorem sarasa lorem sarasa lorem sarasa lorem',
     img: 'https://i.pinimg.com/236x/2a/fc/dc/2afcdcb69bfda8aa8d85ec9cb3befad4.jpg'},
   {

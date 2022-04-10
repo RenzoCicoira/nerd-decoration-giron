@@ -9,7 +9,10 @@ const CartWidget = () => {
   return (
     <div className='flex items-center text-black text-2xl'>
       <FiShoppingCart/>
-      <span className='m-1 text-lg'>{cartQuantity()}</span>
+      {
+        cartQuantity() > 0 && <span className='m-1 text-lg'>{cartQuantity()}</span>
+      }
+      
     </div>
   );
 }
