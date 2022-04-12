@@ -1,7 +1,8 @@
 import ItemList  from "./ItemList"
 import { useEffect, useState } from "react"
-import { getProducts } from "../../mocks/FakeApi"
 import { useParams } from "react-router-dom"
+import { collection, getDocs, query, where } from "firebase/firestore"
+import { db } from "./firebase/config"
 
 const ItemListContainer = ({title, description}) => {
 
@@ -13,20 +14,21 @@ const ItemListContainer = ({title, description}) => {
   useEffect (() =>{
     setLoading(true)
 
-    getProducts
-    .then((res) => {
-      if (categoryId) {
-        setArrayProducts(res.filter( (prod) => prod.category === categoryId))
-      }else {
-        setArrayProducts(res)
-      }
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-    .finally(() => {
-      setLoading(false)
-    })
+    // 1. armar la referencia
+    const productsRef = collection(db, "products")
+    const q = categoryId 
+              ? query(productsRef, where('category', '==', categoryId))
+              : productsRef
+    // 2. llamar (Async) a esa referencia
+    getDocs(q)
+      .then(resp => {
+        const items = resp.docs.map((doc) => ({id: doc.id, ...doc.data()}))
+        setArrayProducts(items)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+   
   }, [categoryId])
 
   return (

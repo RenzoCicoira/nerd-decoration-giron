@@ -85,9 +85,6 @@ const ItemDetail = ({name, price, img, stock, description, id}) => {
           <>
             <div className='self-center'>
               <p className='text-2xl p-2 text-red-500'>Producto sin stock</p>
-              {/* <Link to='/'>
-                <button className='bg-orange-500 hover:bg-orange-600 rounded text-white p-2 px-4 text-xl '>Volver</button>
-              </Link> */}
             </div>
           </>
         }
