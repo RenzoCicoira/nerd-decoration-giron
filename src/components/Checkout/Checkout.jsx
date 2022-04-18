@@ -79,7 +79,6 @@ const Checkout = () => {
         })
     } else {
       alert(`Hay items sin stock`)
-      // navigate()
     }
 
   
