@@ -33,7 +33,7 @@ const ItemDetail = ({name, price, img, stock, description, id}) => {
 
 
   return (
-    <div className='w-2/3 bg-gray-800 py-2 m-2 flex flex-wrap justify-center items-center rounded-xl'>
+    <div className='w-2/3 bg-components py-4 m-24 flex flex-wrap justify-center items-center rounded-xl'>
       <div className='flex'>
         <button className="text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded self-start" onClick={handleNavigate}>Volver</button>
       </div>
