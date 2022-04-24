@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "../../firebase/config"
+import Loading from "../Loading"
 
 const ItemListContainer = ({title, description}) => {
 
@@ -37,7 +38,7 @@ const ItemListContainer = ({title, description}) => {
       <p className="description">{description}</p>
       {
         loading 
-        ? <p className="text-2xl">Cargando...</p> 
+        ? <Loading />
         : <ItemList arrayProducts={arrayProducts}/>
       }
     </div>

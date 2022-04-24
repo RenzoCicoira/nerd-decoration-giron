@@ -2,8 +2,9 @@ import React, { useContext, useState } from 'react'
 import { CartContext } from '../../context/CartContext'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { db } from '../../firebase/config'
-import { getDocs, query, where, documentId, writeBatch,  collection, addDoc, Timestamp, doc, updateDoc, getDoc } from "firebase/firestore"
+import { getDocs, query, where, documentId, writeBatch,  collection, addDoc, Timestamp } from "firebase/firestore"
 import { Link } from 'react-router-dom'
+// import WithoutStock from './WithoutStock'
 
 const Checkout = () => {
 
@@ -21,7 +22,8 @@ const Checkout = () => {
     name: '',
     lastname: '',
     email: '',
-    tel: ''
+    tel: '',
+    dir: '',
   })
 
   const handleInputChange = (e) => {
@@ -50,7 +52,7 @@ const Checkout = () => {
     const productsRef = collection(db, 'products')
    // armo query de búsqueda
     const q = query(productsRef, where(documentId(), 'in', cart.map( (item) => item.id) ))
-    // traigo la colleción
+    // traigo la colección
     const products = await getDocs(q)
     // genero un array para pushear luego los items sin stock
     const outOfStock = []
@@ -76,9 +78,18 @@ const Checkout = () => {
               setOrderId(doc.id)
               emptyCart()
             })
+            .finally(() => {
+              
+            })
         })
     } else {
-      alert(`Hay items sin stock`)
+      alert(
+        `Hay items sin stock.
+Por favor vuelve al carrito y edita tu compra`
+      )
+      // return(
+      //   <WithoutStock />
+      // )
     }
 
   
@@ -114,6 +125,7 @@ const Checkout = () => {
         <div className='mt-4 w-full'>
           <form onSubmit={handleSubmit} className='flex flex-col items-center'>
             <input 
+              required
               className='border m-2 text-xl text-black w-2/3' 
               placeholder='Nombre' 
               type={"text"} 
@@ -122,6 +134,7 @@ const Checkout = () => {
               onChange={handleInputChange}
             />
             <input 
+              required
               className='border m-2 text-xl text-black w-2/3' 
               placeholder='Apellido' 
               type={"text"} 
@@ -130,6 +143,7 @@ const Checkout = () => {
               onChange={handleInputChange}
             />
             <input 
+              required
               className='border m-2 text-xl text-black w-2/3' 
               placeholder='Email' 
               type={"email"} 
@@ -138,11 +152,21 @@ const Checkout = () => {
               onChange={handleInputChange}
             />
             <input 
+              required
               className='border m-2 text-xl text-black w-2/3' 
               placeholder='Teléfono' 
               type={"tel"} 
               value={values.tel}
               id='tel'
+              onChange={handleInputChange}
+            />
+            <input 
+              required
+              className='border m-2 text-xl text-black w-2/3' 
+              placeholder='Dirección' 
+              type={"dir"} 
+              value={values.dir}
+              id='dir'
               onChange={handleInputChange}
             />
             <button  

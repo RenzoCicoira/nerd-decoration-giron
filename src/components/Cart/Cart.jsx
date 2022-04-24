@@ -28,7 +28,7 @@ const Cart = () => {
 
   return (
     <div className=' flex flex-col items-center'>
-      <div className='bg-components m-4 p-4 rounded-xl flex flex-col items-center'>
+      <div className='w-2/3 bg-components m-4 p-4 rounded-xl flex flex-col items-center'>
         <div className='flex self-start'>
           <Link to='/'>
             <button 
@@ -38,43 +38,40 @@ const Cart = () => {
           </Link>
         </div>
         <h2 className='m-4 text-4xl'>Tu compra:</h2>
-        <div className='flex flex-wrap justify-center'>
         {
           cart.map((item) => (
-            <div key={item.id} className='bg-components h-64 w-1/2 m-2 p-2 flex flex-col'>
-              <div>
-                <p className='h-12 text-2xl'>{item.name}</p>
+            <div key={item.id} className='bg-components h-64 w-2/3 m-2 p-2 flex flex-col'>
+              <div className='flex justify-center'>
+                <p className='text-3xl'>{item.name}</p>
               </div>
-                <div className='flex justify-around items-center'>
-                  <div>
-                    <img src={item.img} alt={item.name} className='w-32'/>
-                  </div>
-                  <div>
-                    <p className='mt-2 text-lg'>Cantidad: {item.counter}</p>
-                    <p className='text-lg'>Precio unitario: ${item.price}</p>
-                    <h5>Precio total: ${item.price * item.counter}</h5>
-                  </div>
-                  <div className='flex self-end ml-1 pb-2'>
-                    <button 
-                      onClick={() => removeItem(item.id)} 
-                      className='bg-red-500 hover:bg-red-600 p-2 text-lg rounded'
-                      >
-                      <FaTrashAlt/>
-                    </button>
-                  </div>
-                  <div className='flex self-end ml-1 pb-2'>
-                    <button 
-                      onClick={() => removeItem(item.id)} 
-                      className='bg-yellow-500 hover:bg-yellow-600 p-2 text-lg rounded'
-                      >
-                      <FaEdit/>
-                    </button>
-                  </div>
+              <div className='flex justify-around items-center'>
+                <div>
+                  <img src={item.img} alt={item.name} className='h-44'/>
+                </div>
+                <div>
+                  <p className='mt-2 text-lg'>Cantidad: {item.counter}</p>
+                  <p className='text-lg'>Precio unitario: ${item.price}</p>
+                  <h5>Precio total: ${item.price * item.counter}</h5>
+                </div>
+                <div className='flex flex-col ml-1 pb-2'>
+                  <Link 
+                    onClick={() => removeItem(item.id)} 
+                    to={`/detail/${item.id}`}
+                    className='bg-yellow-500 hover:bg-yellow-600 p-2 text-lg rounded my-3 text-white'
+                    >
+                    <FaEdit/>
+                  </Link>
+                  <button 
+                    onClick={() => removeItem(item.id)} 
+                    className='bg-red-500 hover:bg-red-600 p-2 text-lg rounded my-3'
+                    >
+                    <FaTrashAlt/>
+                  </button>
+                </div>
               </div>
             </div> 
           ))
         }
-        </div>
         <h3 className='m-4'>TOTAL: ${cartTotal()}</h3>
         
         <button onClick={emptyCart} className='bg-red-500 hover:bg-red-600 text-2xl m-2 p-2 rounded'>Vaciar Carrito</button>

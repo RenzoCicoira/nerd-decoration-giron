@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import ItemDetail from '../atoms/ItemDetail'
 import { db } from '../../firebase/config'
 import { doc, getDoc } from 'firebase/firestore'
+import Loading from '../Loading'
 
 const ItemDetailContainer = () => {
 
@@ -30,7 +31,7 @@ useEffect(() => {
     <div className='flex justify-center'>
       {
       loading 
-      ? <h2>Cargando...</h2> 
+      ? <Loading />
       : <ItemDetail {...productDetail}/>
       }
     </div>

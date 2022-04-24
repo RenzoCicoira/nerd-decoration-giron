@@ -3,11 +3,12 @@ import ItemCount from './ItemCount'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { CartContext } from '../../context/CartContext'
+import { FaEdit } from 'react-icons/fa'
 
 
 const ItemDetail = ({name, price, img, stock, description, id}) => {
 
-  const {cart, addItem, isInCart} = useContext(CartContext)
+  const {cart, addItem, isInCart, removeItem} = useContext(CartContext)
   console.log( cart )
 
   const navigate = useNavigate()
@@ -26,7 +27,6 @@ const ItemDetail = ({name, price, img, stock, description, id}) => {
       img,
       counter
     }
-    console.log(itemToAdd)
     addItem(itemToAdd)
   }
 
@@ -48,7 +48,6 @@ const ItemDetail = ({name, price, img, stock, description, id}) => {
           <p className='flex w-60'>{description}</p>
           <p className='text-2xl'>Precio: ${price}</p>
           <p className='text-lg'>Stock Disponible: {stock}</p>
-          {/* { stock <= 10 && <p className='text-red-500'>¡Últimas unidades!</p>} */}
         </div>
 
         {
@@ -64,17 +63,24 @@ const ItemDetail = ({name, price, img, stock, description, id}) => {
               setCounter={setCounter}
               onAdd={addToCart}
               />
-              : <div className='flex flex-col'>
-                  <p className='text-lg font-medium text-green-50'>Agregaste {counter} unidades de {name} al carrito de compras!</p>
+              : <div className='flex flex-col items-center'>
+                  <p className='pl-6 text-lg font-medium text-green-50'>Agregaste {counter} unidades de {name} al carrito de compras!</p>
+                  <button
+                    onClick={() => removeItem(id)} 
+                    className='flex items-center no-underline m-1 py-1 px-4 bg-gray-100 rounded-xl self-center text-2xl text-orange-400 hover:bg-gray-200 hover:text-orange-600' 
+                    to='/'
+                    ><FaEdit/>
+                    <div className='px-4'>Editar Compra</div>
+                  </button>
                   <Link 
-                  className='no-underline m-1 py-1 px-10 bg-gray-100 rounded-xl self-center text-2xl text-green-500 hover:bg-gray-300' 
-                  to='/'
-                  >Seguir comprando
+                    className='no-underline m-1 py-1 px-10 bg-gray-100 rounded-xl self-center text-2xl text-green-400 hover:bg-gray-200 hover:text-green-600' 
+                    to='/'
+                    >Seguir comprando
                   </Link>
                   <Link 
-                  className='no-underline m-1 py-1 px-20 bg-green-500 rounded-xl self-center text-2xl text-black hover:bg-green-600' 
-                  to='/cart'
-                  >Ir al Carrito
+                    className='no-underline m-1 py-1 px-20 bg-green-500 rounded-xl self-center text-2xl text-black hover:bg-green-600' 
+                    to='/cart'
+                    >Ir al Carrito
                   </Link>
                   
                 </div>

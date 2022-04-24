@@ -11,9 +11,6 @@ const Navbar = () => {
       <Link to="/category/vajilla" className="no-underline text-orange-50 hover:text-orange-500">Vajilla</Link>
       <Link to="/category/stickers" className="no-underline text-orange-50 hover:text-orange-500">Stickers</Link>
       <Link to="/category/textil" className="no-underline text-orange-50 hover:text-orange-500">Textil</Link>
-
-      {/* <Link to="/nosotros" className="no-underline text-gray-100 hover:text-gray-800">Nosotros</Link>
-      <Link to="/contacto" className="no-underline text-gray-100 hover:text-gray-800">Contacto</Link> */}
       <Link className='' to='/cart'><CartWidget /></Link>
     </nav>
   )
