@@ -1,5 +1,5 @@
 import './App.css';
-import Navbar from './components/NavBar';
+import Navbar from './components/NavBar/NavBar';
 import ItemListContainer from './components/molecules/ItemListContainer';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'

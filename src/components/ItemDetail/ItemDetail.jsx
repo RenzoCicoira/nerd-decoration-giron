@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import ItemCount from './ItemCount'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { CartContext } from '../../context/CartContext'
-import { FaEdit } from 'react-icons/fa'
+import ItemCount from '../atoms/ItemCount'
+import AddedToCart from '../atoms/AddedToCart'
 
 
 const ItemDetail = ({name, price, img, stock, description, id}) => {
@@ -30,8 +30,6 @@ const ItemDetail = ({name, price, img, stock, description, id}) => {
     addItem(itemToAdd)
   }
 
-
-
   return (
     <div className='w-2/3 bg-components py-4 m-24 flex flex-wrap justify-center items-center rounded-xl'>
       <div className='flex'>
@@ -49,7 +47,6 @@ const ItemDetail = ({name, price, img, stock, description, id}) => {
           <p className='text-2xl'>Precio: ${price}</p>
           <p className='text-lg'>Stock Disponible: {stock}</p>
         </div>
-
         {
           stock > 0 
           ?
@@ -58,32 +55,17 @@ const ItemDetail = ({name, price, img, stock, description, id}) => {
           {
             !isInCart(id)
             ? <ItemCount 
-              max={stock} 
-              counter={counter}
-              setCounter={setCounter}
-              onAdd={addToCart}
+                max={stock} 
+                counter={counter}
+                setCounter={setCounter}
+                onAdd={addToCart}
               />
-              : <div className='flex flex-col items-center'>
-                  <p className='pl-6 text-lg font-medium text-green-50'>Agregaste {counter} unidades de {name} al carrito de compras!</p>
-                  <button
-                    onClick={() => removeItem(id)} 
-                    className='flex items-center no-underline m-1 py-1 px-4 bg-gray-100 rounded-xl self-center text-2xl text-orange-400 hover:bg-gray-200 hover:text-orange-600' 
-                    to='/'
-                    ><FaEdit/>
-                    <div className='px-4'>Editar Compra</div>
-                  </button>
-                  <Link 
-                    className='no-underline m-1 py-1 px-10 bg-gray-100 rounded-xl self-center text-2xl text-green-400 hover:bg-gray-200 hover:text-green-600' 
-                    to='/'
-                    >Seguir comprando
-                  </Link>
-                  <Link 
-                    className='no-underline m-1 py-1 px-20 bg-green-500 rounded-xl self-center text-2xl text-black hover:bg-green-600' 
-                    to='/cart'
-                    >Ir al Carrito
-                  </Link>
-                  
-                </div>
+              : <AddedToCart 
+                  removeItem={removeItem}
+                  counter={counter}
+                  id={id}
+                  name={name}
+                />
               }
           </div>
           </>

@@ -9,7 +9,7 @@ const ItemCount = ({max = 10, onAdd, counter, setCounter}) => {
 
   return (
     <div>
-      <div className='flex flex-col items-center bg-gray-600 w-60 pb-4 mt-2 rounded-xl'>
+      <div className='flex flex-col items-center bg-components w-60 pb-4 mt-2 rounded-xl'>
           <div>
             <button onClick={subtract} 
             disabled={counter === 1}

@@ -1,16 +1,41 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { CartContext } from '../../context/CartContext'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { db } from '../../firebase/config'
 import { getDocs, query, where, documentId, writeBatch,  collection, addDoc, Timestamp } from "firebase/firestore"
-import { Link } from 'react-router-dom'
-// import WithoutStock from './WithoutStock'
+import SuccessCheckout from './SuccessCheckout'
+import DeskCheckoutForm from './DeskCheckoutForm'
+import MobCheckoutForm from './MobCheckoutForm'
+import WithoutStock from './WithoutStock'
 
 const Checkout = () => {
 
   const {cart, cartTotal, emptyCart} = useContext(CartContext)
 
   const [orderId, setOrderId] = useState(null)
+
+  const [isMobile, setIsMobile] = useState(false)
+
+  const checkIsMobile = () => {
+    if (window.visualViewport.width <= 1024) {
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  }
+ 
+   useEffect(() => {
+     checkIsMobile()
+ 
+     window.addEventListener('resize', checkIsMobile)
+ 
+     return () => {
+       window.removeEventListener('resize', checkIsMobile)
+     }
+   }, [])
+
+  // cree un estado que cambiará segun si el checkout pasa o no y lo inicialicé en false
+  const [outOfStock, setOutOfStock] = useState(false)
 
   const navigate = useNavigate()
 
@@ -27,8 +52,6 @@ const Checkout = () => {
   })
 
   const handleInputChange = (e) => {
-    console.log(e.target.value)
-    console.log(e.target.id)
 
     setValues({
       ...values,
@@ -78,32 +101,26 @@ const Checkout = () => {
               setOrderId(doc.id)
               emptyCart()
             })
-            .finally(() => {
-              
-            })
         })
     } else {
-      alert(
-        `Hay items sin stock.
-Por favor vuelve al carrito y edita tu compra`
-      )
-      // return(
-      //   <WithoutStock />
-      // )
+      setOutOfStock(true)
+      // si no pasa, el estado cambia a true
+      console.log({...outOfStock})
     }
 
-  
+  }
+
+
+  // si el estado es true, entonces se renderiza el componente WithoutStock
+  if(outOfStock === true ) {
+    return (
+      <WithoutStock/>
+    )
   }
 
   if(orderId) {
     return (
-      <div className='h-screen flex flex-col items-center'>
-        <div className='mt-24 p-8 rounded-xl bg-components flex flex-col items-center'>
-          <h2 className='text-5xl'>Tu compra se ha realizado exitosamente!</h2>
-          <p className='text-3xl pt-4'>El número de orden de tu compra es: {orderId}</p>
-          <Link to='/' className='bg-orange-500 hover:bg-orange-600 px-8 py-2 m-2 text-4xl rounded no-underline text-white mt-4'>Volver al Inicio</Link>
-        </div>
-      </div>
+      <SuccessCheckout orderId={orderId}/>
     )
   }
 
@@ -113,71 +130,19 @@ Por favor vuelve al carrito y edita tu compra`
   }
 
   return (
-    <div className='flex flex-col items-center h-screen'>
-      <div className='mt-24 p-4 bg-components rounded-xl w-1/2'>
-        <div>
-          <button className="text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded" onClick={handleNavigate}>Volver</button>
-        </div>
-        <div className='flex flex-col items-center'>
-          <h2 className=''>Checkout</h2>
-          <p className='text-2xl m-2'>Formulario de confirmación de compra</p>
-        </div>
-        <div className='mt-4 w-full'>
-          <form onSubmit={handleSubmit} className='flex flex-col items-center'>
-            <input 
-              required
-              className='border m-2 text-xl text-black w-2/3' 
-              placeholder='Nombre' 
-              type={"text"} 
-              value={values.name}
-              id='name'
-              onChange={handleInputChange}
-            />
-            <input 
-              required
-              className='border m-2 text-xl text-black w-2/3' 
-              placeholder='Apellido' 
-              type={"text"} 
-              value={values.lastname}
-              id='lastname'
-              onChange={handleInputChange}
-            />
-            <input 
-              required
-              className='border m-2 text-xl text-black w-2/3' 
-              placeholder='Email' 
-              type={"email"} 
-              value={values.email}
-              id='email'
-              onChange={handleInputChange}
-            />
-            <input 
-              required
-              className='border m-2 text-xl text-black w-2/3' 
-              placeholder='Teléfono' 
-              type={"tel"} 
-              value={values.tel}
-              id='tel'
-              onChange={handleInputChange}
-            />
-            <input 
-              required
-              className='border m-2 text-xl text-black w-2/3' 
-              placeholder='Dirección' 
-              type={"dir"} 
-              value={values.dir}
-              id='dir'
-              onChange={handleInputChange}
-            />
-            <button  
-              className='bg-green-500 hover:bg-green-600 rounded w-2/3 py-1 my-4 text-2xl' 
-              type='submit'
-              >Enviar
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+    isMobile
+    ? <MobCheckoutForm
+        handleNavigate={handleNavigate}
+        handleSubmit={handleSubmit}
+        handleInputChange={handleInputChange}
+        values={values}
+      />
+    : <DeskCheckoutForm 
+        handleNavigate={handleNavigate}
+        handleSubmit={handleSubmit}
+        handleInputChange={handleInputChange}
+        values={values}
+      />
   )
 }
 
