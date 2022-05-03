@@ -15,14 +15,14 @@ useEffect(() => {
   setLoading(true)
 
    const docRef = doc(db, "products", itemId)
-   getDoc(docRef)
-   .then(doc => {
-     const prod = {id: doc.id, ...doc.data()}
-     setProductDetail(prod)
-   })
-   .finally(() => {
-     setLoading(false)
-   })
+    getDoc(docRef)
+    .then(doc => {
+      const prod = {id: doc.id, ...doc.data()}
+      setProductDetail(prod)
+    })
+    .finally(() => {
+      setLoading(false)
+    })
    
 }, [itemId])
 
