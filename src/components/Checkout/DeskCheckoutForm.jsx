@@ -43,6 +43,15 @@ const DeskCheckoutForm = ({handleSubmit, handleNavigate, handleInputChange, valu
             <input 
               required
               className='border m-2 text-xl text-black w-2/3' 
+              placeholder='Ingresa mail nuevamente' 
+              type={"email"} 
+              value={values.emailComp}
+              id='emailComp'
+              onChange={handleInputChange}
+            />
+            <input 
+              required
+              className='border m-2 text-xl text-black w-2/3' 
               placeholder='Teléfono' 
               type={"tel"} 
               value={values.tel}
@@ -58,11 +67,23 @@ const DeskCheckoutForm = ({handleSubmit, handleNavigate, handleInputChange, valu
               id='dir'
               onChange={handleInputChange}
             />
-            <button  
-              className='bg-green-500 hover:bg-green-600 rounded w-2/3 py-1 my-4 text-2xl' 
-              type='submit'
-              >Realizar Compra
-            </button>
+            {
+              (values.email === values.emailComp)
+              ? <button  
+                  className='bg-green-500 hover:bg-green-600 rounded w-2/3 py-1 my-4 text-2xl' 
+                  type='submit'
+                  >Realizar Compra
+                </button>
+              : <div className='flex flex-col items-center justify-center w-2/3'>
+                  <p>Ambos input de email deben coincidir</p>
+                  <button  
+                    className='bg-green-500 rounded py-1 my-3 text-2xl w-full' 
+                    type='submit'
+                    disabled
+                    >Realizar Compra
+                  </button>
+              </div>  
+            }
           </form>
         </div>
       </div>

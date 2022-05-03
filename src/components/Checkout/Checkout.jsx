@@ -47,6 +47,7 @@ const Checkout = () => {
     name: '',
     lastname: '',
     email: '',
+    emailComp: '',
     tel: '',
     dir: '',
   })
@@ -59,57 +60,60 @@ const Checkout = () => {
     })
 
   }
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault()
 
-    const orden = {
-      items: cart,
-      total: cartTotal(),
-      buyer: {...values},
-      timestamp: Timestamp.fromDate(new Date())
-    }
 
-    const batch = writeBatch(db)
-    const ordersRef = collection(db, 'orders')
-    const productsRef = collection(db, 'products')
-   // armo query de búsqueda
-    const q = query(productsRef, where(documentId(), 'in', cart.map( (item) => item.id) ))
-    // traigo la colección
-    const products = await getDocs(q)
-    // genero un array para pushear luego los items sin stock
-    const outOfStock = []
-    // itero para comparar y preparar el batch
-    products.docs.forEach((doc) => {
-      const itemInCart = cart.find((item) => item.id === doc.id)
 
-      if (doc.data().stock >= itemInCart.counter) {
-        batch.update(doc.ref, {
-          stock: doc.data().stock - itemInCart.counter
-        }) 
-      } else {
-        outOfStock.push(itemInCart)
-      }
-    })
+const handleSubmit = async (e) => {
+  e.preventDefault()
 
-    // evaluo que todos hayan cumplido la condición
-    if (outOfStock.length === 0) {
-      batch.commit()
-        .then(() => {
-          addDoc(ordersRef, orden)
-            .then((doc) => {
-              setOrderId(doc.id)
-              emptyCart()
-            })
-        })
-    } else {
-      setOutOfStock(true)
-      // si no pasa, el estado cambia a true
-      console.log({...outOfStock})
-    }
-
+  const orden = {
+    items: cart,
+    total: cartTotal(),
+    buyer: {...values},
+    timestamp: Timestamp.fromDate(new Date())
   }
 
+  const batch = writeBatch(db)
+  const ordersRef = collection(db, 'orders')
+  const productsRef = collection(db, 'products')
+ // armo query de búsqueda
+  const q = query(productsRef, where(documentId(), 'in', cart.map( (item) => item.id) ))
+  // traigo la colección
+  const products = await getDocs(q)
+  // genero un array para pushear luego los items sin stock
+  const outOfStock = []
+  // itero para comparar y preparar el batch
+  products.docs.forEach((doc) => {
+    const itemInCart = cart.find((item) => item.id === doc.id)
+
+    if (doc.data().stock >= itemInCart.counter) {
+      batch.update(doc.ref, {
+        stock: doc.data().stock - itemInCart.counter
+      }) 
+    } else {
+      outOfStock.push(itemInCart)
+    }
+  })
+
+  // evaluo que todos hayan cumplido la condición
+  if (outOfStock.length === 0) {
+    batch.commit()
+      .then(() => {
+        addDoc(ordersRef, orden)
+          .then((doc) => {
+            setOrderId(doc.id)
+            emptyCart()
+          })
+      })
+  } else {
+    setOutOfStock(true)
+    // si no pasa, el estado cambia a true
+  }
+
+}
+
+
+  
 
   // si el estado es true, entonces se renderiza el componente WithoutStock
   if(outOfStock === true ) {
@@ -123,7 +127,6 @@ const Checkout = () => {
       <SuccessCheckout orderId={orderId}/>
     )
   }
-
 
   if (cart.length === 0) {
     return <Navigate to='/'/>

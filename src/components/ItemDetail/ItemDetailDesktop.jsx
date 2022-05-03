@@ -10,14 +10,13 @@ const ItemDetailDesktop = ({handleNavigate, setCounter, addToCart, name, id, pri
 
   
   return (
-    <div className='w-2/3 bg-components py-4 m-24 flex flex-wrap justify-center items-center rounded-xl'>
+    <div className='bg-components py-4 m-24 flex justify-center items-center rounded-xl'>
       <div className='flex'>
-        <button className="text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded self-start" onClick={handleNavigate}>Volver</button>
+        <button className="text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 ml-4 rounded" onClick={handleNavigate}>Volver</button>
       </div>
       <div className='flex flex-col px-4 w-96'>
-        <p className='text-2xl'>Detalle del producto:</p>
-        <img src={img} alt={name} className="m-2"/>
         <h3>{name}</h3>
+        <img src={img} alt={name} className="m-2"/>
       </div>
       <div className='flex flex-col px-4 justify-end w-96 px-4'>
         <div className='self-center'>
